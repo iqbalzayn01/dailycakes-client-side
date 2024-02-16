@@ -3,8 +3,8 @@ export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     fontFamily: {
-      fontHeading: ['"Cormorant Garamond"', "serif"],
-      fontParagraph: ['"Nunito Sans"', "sans-serif"],
+      fontPrimary: ['"Cormorant Garamond"', "serif"],
+      fontSecondary: ['"Nunito Sans"', "sans-serif"],
     },
     extend: {},
   },

@@ -2,7 +2,7 @@ import anime from "animejs/lib/anime.es.js";
 import PropTypes from "prop-types";
 import { useEffect, useRef } from "react";
 
-export const Navbar = ({ isOpen }) => {
+export const Navbar = ({ isOpen, closeMenu }) => {
   const navRef = useRef(null);
 
   useEffect(() => {
@@ -10,7 +10,6 @@ export const Navbar = ({ isOpen }) => {
     if (isOpen) {
       menu.style.display = "block";
       anime({
-        // targets: navRef.current.children,
         targets: menu,
         translateY: [200, 0],
         delay: anime.stagger(100),
@@ -37,17 +36,20 @@ export const Navbar = ({ isOpen }) => {
     <>
       <nav
         ref={navRef}
-        className="absolute bg-white inset-0 z-50 px-5 py-5"
+        className="fixed bg-white inset-0 z-50 px-5 py-5"
         style={{ display: "none" }}
       >
-        <button className="float-end font-fontHeading font-bold uppercase hover:underline">
+        <button
+          onClick={closeMenu}
+          className="float-end font-fontPrimary font-bold uppercase hover:underline"
+        >
           Close
         </button>
         <ul className="container mx-auto px-5 w-fit h-screen flex flex-col items-start justify-center gap-5">
           <li>
             <a
               href="#"
-              className="font-fontHeading font-semibold text-5xl hover:underline"
+              className="font-fontPrimary font-semibold text-5xl hover:underline"
             >
               Tentang Kami
             </a>
@@ -55,7 +57,7 @@ export const Navbar = ({ isOpen }) => {
           <li>
             <a
               href="#"
-              className="font-fontHeading font-semibold text-5xl hover:underline"
+              className="font-fontPrimary font-semibold text-5xl hover:underline"
             >
               Produk
             </a>
@@ -63,7 +65,7 @@ export const Navbar = ({ isOpen }) => {
           <li>
             <a
               href="#"
-              className="font-fontHeading font-semibold text-5xl hover:underline"
+              className="font-fontPrimary font-semibold text-5xl hover:underline"
             >
               Promo Spesial
             </a>
@@ -71,7 +73,7 @@ export const Navbar = ({ isOpen }) => {
           <li>
             <a
               href="#"
-              className="font-fontHeading font-semibold text-5xl hover:underline"
+              className="font-fontPrimary font-semibold text-5xl hover:underline"
             >
               Hubungi Kami
             </a>
@@ -84,4 +86,5 @@ export const Navbar = ({ isOpen }) => {
 
 Navbar.propTypes = {
   isOpen: PropTypes.bool.isRequired,
+  closeMenu: PropTypes.func.isRequired,
 };

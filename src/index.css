@@ -2,3 +2,13 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+    .container-base {
+        @apply container mx-auto
+    }
+
+    .font-style-primary {
+        @apply font-fontPrimary uppercase tracking-wider
+    }
+}
