@@ -1,6 +1,26 @@
 import anime from "animejs/lib/anime.es.js";
 import PropTypes from "prop-types";
 import { useEffect, useRef } from "react";
+import { Link } from "react-router-dom";
+
+const dataMenu = [
+  {
+    menu: "Tentang Kami",
+    route: "/tentangkami",
+  },
+  {
+    menu: "Produk",
+    route: "/produk",
+  },
+  {
+    menu: "Promo Spesial",
+    route: "/promospesial",
+  },
+  {
+    menu: "Hubungi Kami",
+    route: "/hubungikami",
+  },
+];
 
 export const Navbar = ({ isOpen, closeMenu }) => {
   const navRef = useRef(null);
@@ -46,38 +66,16 @@ export const Navbar = ({ isOpen, closeMenu }) => {
           Close
         </button>
         <ul className="container mx-auto px-5 w-fit h-screen flex flex-col items-start justify-center gap-5">
-          <li>
-            <a
-              href="#"
-              className="font-fontPrimary font-semibold text-5xl hover:underline"
-            >
-              Tentang Kami
-            </a>
-          </li>
-          <li>
-            <a
-              href="#"
-              className="font-fontPrimary font-semibold text-5xl hover:underline"
-            >
-              Produk
-            </a>
-          </li>
-          <li>
-            <a
-              href="#"
-              className="font-fontPrimary font-semibold text-5xl hover:underline"
-            >
-              Promo Spesial
-            </a>
-          </li>
-          <li>
-            <a
-              href="#"
-              className="font-fontPrimary font-semibold text-5xl hover:underline"
-            >
-              Hubungi Kami
-            </a>
-          </li>
+          {dataMenu.map((menuItem) => (
+            <li key={menuItem.menu}>
+              <Link
+                to={menuItem.route}
+                className="font-fontPrimary font-semibold text-5xl hover:underline"
+              >
+                {menuItem.menu}
+              </Link>
+            </li>
+          ))}
         </ul>
       </nav>
     </>

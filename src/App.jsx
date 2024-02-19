@@ -1,11 +1,12 @@
-import { Header } from "./sections/Header";
-import { Hero } from "./sections/Hero";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Home from "./pages/Home";
 
 export default function App() {
   return (
-    <>
-      <Header />
-      <Hero />
-    </>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Home />}></Route>
+      </Routes>
+    </BrowserRouter>
   );
 }
