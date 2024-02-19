@@ -1,105 +1,158 @@
-import { useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
-import anime from "animejs/lib/anime.es.js";
+import PropTypes from "prop-types";
+import { useRef } from "react";
+import {
+  motion,
+  useScroll,
+  useSpring,
+  useTransform,
+  useMotionValue,
+  useVelocity,
+  useAnimationFrame,
+  wrap,
+} from "framer-motion";
 
-export const FeaturedProducts = () => {
-  const animatedElementRef = useRef(null);
+const ParallaxText = ({ children, baseVelocity = 100 }) => {
+  const baseX = useMotionValue(0);
+  const { scrollY } = useScroll();
+  const scrollVelocity = useVelocity(scrollY);
+  const smoothVelocity = useSpring(scrollVelocity, {
+    damping: 50,
+    stiffness: 400,
+  });
+  const velocityFactor = useTransform(smoothVelocity, [0, 1000], [0, 5], {
+    clamp: false,
+  });
 
-  useEffect(() => {
-    const handleScroll = () => {
-      const scrollPosition = window.scrollY;
-      const windowHeight = window.innerHeight;
+  const x = useTransform(baseX, (v) => `${wrap(-20, -45, v)}%`);
 
-      const elementOffset = animatedElementRef.current.offsetTop;
-      const elementHeight = animatedElementRef.current.offsetHeight;
+  const directionFactor = useRef(1);
+  useAnimationFrame((t, delta) => {
+    let moveBy = directionFactor.current * baseVelocity * (delta / 1000);
+    if (velocityFactor.get() < 0) {
+      directionFactor.current = -1;
+    } else if (velocityFactor.get() > 0) {
+      directionFactor.current = 1;
+    }
 
-      const isVisible =
-        scrollPosition + windowHeight > elementOffset &&
-        scrollPosition < elementOffset + elementHeight;
+    moveBy += directionFactor.current * moveBy * velocityFactor.get();
 
-      if (isVisible) {
-        anime({
-          targets: animatedElementRef.current,
-          translateX: [100, -100],
-          opacity: 1,
-          duration: 1000,
-          easing: "easeInOutQuad",
-        });
-      }
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+    baseX.set(baseX.get() + moveBy);
+  });
 
   return (
-    <section className="relative overflow-x-hidden 2xl:container-base mx-auto px-5 py-10">
-      <p
-        ref={animatedElementRef}
-        className="absolute inset-0 z-10 text-center transform translate-y-1/2 font-fontPrimary text-9xl text-slate-200 italic"
+    <div className="parallax">
+      <motion.div className="scroller" style={{ x }}>
+        <span className="span">{children} </span>
+        <span className="span">{children} </span>
+        <span className="span">{children} </span>
+        <span className="span">{children} </span>
+      </motion.div>
+    </div>
+  );
+};
+
+ParallaxText.propTypes = {
+  children: PropTypes.string,
+  baseVelocity: PropTypes.number,
+};
+
+const ParallaxImage = (target) => {
+  const { scrollYProgress } = useScroll({
+    target: target,
+    offset: ["start end", "end start"],
+  });
+
+  const springConfig = { damping: 100, stiffness: 300 };
+  const springY = useSpring(scrollYProgress, springConfig);
+  const imagesY = useTransform(springY, [0, 1], ["0%", "100%"]);
+  const backgroundY = useTransform(springY, [0, 1], ["0%", "-200%"]);
+  return { imagesY, backgroundY };
+};
+
+export const FeaturedProducts = () => {
+  const target = useRef(null);
+  const { backgroundY, imagesY } = ParallaxImage(target);
+
+  return (
+    <section
+      ref={target}
+      className="relative w-full h-screen 2xl:container-base"
+    >
+      <motion.div
+        style={{
+          y: backgroundY,
+        }}
+        className="bg-white"
       >
-        Produk Unggulan
-      </p>
-      <div className="flex flex-col gap-20">
-        <figure className="w-[325px] self-start z-20">
-          <Link>
-            <img
-              src="/content/product1.png"
-              className="rounded-xl"
-              width={325}
-              alt="Product 1"
-            />
-          </Link>
-          <figcaption className="pt-5">
-            Kombinasi sempurna antara cokelat, krim, dan ceri segar dalam setiap
-            gigitan, membuat Kue Black Forest kami menjadi pilihan utama untuk
-            pecinta kue.
-          </figcaption>
-        </figure>
-        <figure className="w-[325px] self-center z-20">
-          <Link>
-            <img
-              src="/content/product2.png"
-              className="rounded-xl"
-              width={325}
-              alt="Product 2"
-            />
-          </Link>
-          <figcaption className="pt-5">
-            Nikmati kesegaran sereal dan kaya nutrisi multigrain dalam setiap
-            irisan Roti Sereal Multigrain kami, sempurna untuk sarapan atau
-            camilan sehat sepanjang hari.
-          </figcaption>
-        </figure>
-        <figure className="w-[325px] self-start z-20">
-          <Link>
-            <img
-              src="/content/product3.png"
-              className="rounded-xl"
-              width={325}
-              alt="Product 3"
-            />
-          </Link>
-          <figcaption className="pt-5">
-            Rasakan kelembutan krim keju dan kelezatan kue merah muda yang
-            lembut dalam Kue Red Velvet kami, sebuah kombinasi yang tak
-            terlupakan untuk momen spesial.
-          </figcaption>
-        </figure>
-        <figure className="w-[325px] self-end z-20">
-          <Link>
-            <img
-              src="/content/product4.png"
-              className="rounded-xl"
-              width={325}
-              alt="Product 4"
-            />
-          </Link>
-          <figcaption className="pt-5">
-            Dengan aroma pandan yang harum dan tekstur lembut yang menggoda,
-            Roti Pandan kami menjadi favorit di setiap meja sarapan.
-          </figcaption>
-        </figure>
-      </div>
+        <ParallaxText baseVelocity={-3}>Produk Unggulan</ParallaxText>
+        <motion.div
+          style={{
+            y: imagesY,
+          }}
+          className="flex flex-col gap-20 px-5"
+        >
+          <figure className="w-[325px] self-center md:self-start z-20">
+            <Link>
+              <img
+                src="/content/product1.png"
+                className="rounded-xl"
+                width={325}
+                alt="Product 1"
+              />
+            </Link>
+            <figcaption className="pt-5">
+              Kombinasi sempurna antara cokelat, krim, dan ceri segar dalam
+              setiap gigitan, membuat Kue Black Forest kami menjadi pilihan
+              utama untuk pecinta kue.
+            </figcaption>
+          </figure>
+          <figure className="w-[325px] self-center md:self-center z-20">
+            <Link>
+              <img
+                src="/content/product2.png"
+                className="rounded-xl"
+                width={325}
+                alt="Product 2"
+              />
+            </Link>
+            <figcaption className="pt-5">
+              Nikmati kesegaran sereal dan kaya nutrisi multigrain dalam setiap
+              irisan Roti Sereal Multigrain kami, sempurna untuk sarapan atau
+              camilan sehat sepanjang hari.
+            </figcaption>
+          </figure>
+          <figure className="w-[325px] self-center md:self-start z-20">
+            <Link>
+              <img
+                src="/content/product3.png"
+                className="rounded-xl"
+                width={325}
+                alt="Product 3"
+              />
+            </Link>
+            <figcaption className="pt-5">
+              Rasakan kelembutan krim keju dan kelezatan kue merah muda yang
+              lembut dalam Kue Red Velvet kami, sebuah kombinasi yang tak
+              terlupakan untuk momen spesial.
+            </figcaption>
+          </figure>
+          <figure className="w-[325px] self-center md:self-end z-20">
+            <Link>
+              <img
+                src="/content/product4.png"
+                className="rounded-xl"
+                width={325}
+                alt="Product 4"
+              />
+            </Link>
+            <figcaption className="pt-5">
+              Dengan aroma pandan yang harum dan tekstur lembut yang menggoda,
+              Roti Pandan kami menjadi favorit di setiap meja sarapan.
+            </figcaption>
+          </figure>
+        </motion.div>
+      </motion.div>
     </section>
   );
 };

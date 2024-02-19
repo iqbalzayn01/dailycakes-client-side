@@ -12,3 +12,20 @@
         @apply font-fontPrimary uppercase tracking-wider
     }
 }
+
+@layer components {
+    .parallax {
+        @apply absolute inset-0 translate-y-[45%] md:translate-y-1/2 overflow-hidden flex flex-nowrap whitespace-nowrap
+    }
+
+    .scroller {
+        @apply flex font-fontPrimary font-semibold text-7xl md:text-9xl text-gray-400 italic
+    }
+
+    .span {
+        @apply block mr-8
+    }
+
+
+
+}
