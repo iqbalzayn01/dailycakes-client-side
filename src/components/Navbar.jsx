@@ -65,7 +65,7 @@ export const Navbar = ({ isOpen, closeMenu }) => {
         >
           Close
         </button>
-        <ul className="container mx-auto px-5 w-fit h-screen flex flex-col items-start justify-center gap-5">
+        <ul className="container mx-auto px-5 w-full h-screen flex flex-col items-start justify-center gap-5">
           {dataMenu.map((menuItem) => (
             <li key={menuItem.menu}>
               <Link
