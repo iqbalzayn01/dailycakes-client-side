@@ -6,7 +6,11 @@ export default {
       fontPrimary: ['"Cormorant Garamond"', "serif"],
       fontSecondary: ['"Nunito Sans"', "sans-serif"],
     },
-    extend: {},
+    extend: {
+      colors: {
+        pinkcustom: "#FF90BC",
+      },
+    },
   },
   plugins: [],
 };

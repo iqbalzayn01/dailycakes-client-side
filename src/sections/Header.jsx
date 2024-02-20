@@ -17,7 +17,7 @@ export const Header = () => {
         </button>
         <Link
           to={"/"}
-          className="logo font-fontPrimary font-bold uppercase text-2xl tracking-wider"
+          className="logo font-fontPrimary font-bold text-pinkcustom text-2xl uppercase  tracking-wider"
         >
           DailyCakes
         </Link>

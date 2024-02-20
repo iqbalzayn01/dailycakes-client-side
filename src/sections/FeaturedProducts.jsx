@@ -65,7 +65,7 @@ const ParallaxImage = (target) => {
 
   const springConfig = { damping: 100, stiffness: 300 };
   const springY = useSpring(scrollYProgress, springConfig);
-  const imagesY = useTransform(springY, [0, 1], ["0%", "100%"]);
+  const imagesY = useTransform(springY, [0, 1], ["0%", "60%"]);
   const backgroundY = useTransform(springY, [0, 1], ["0%", "-200%"]);
   return { imagesY, backgroundY };
 };
