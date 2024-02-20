@@ -4,6 +4,10 @@
 @tailwind utilities;
 
 @layer base {
+    body {
+        @apply relative
+    }
+
     .container-base {
         @apply container mx-auto
     }
