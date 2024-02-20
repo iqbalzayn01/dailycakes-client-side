@@ -24,7 +24,9 @@ export const LoadingScreen = () => {
           repeatDelay: 1,
         }}
       />
-      <h1 className="font-style-primary font-semibold text-6xl">DailyCakes</h1>
+      <h1 className="font-style-primary font-semibold text-5xl md:text-6xl">
+        DailyCakes
+      </h1>
     </motion.div>
   );
 };
