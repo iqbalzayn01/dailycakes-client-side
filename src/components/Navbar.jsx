@@ -56,7 +56,7 @@ export const Navbar = ({ isOpen, closeMenu }) => {
     <>
       <nav
         ref={navRef}
-        className="fixed bg-white inset-0 z-50 px-5 py-5"
+        className="fixed bg-white w-full h-screen overflow-hidden inset-0 z-50 px-5 py-5"
         style={{ display: "none" }}
       >
         <button
