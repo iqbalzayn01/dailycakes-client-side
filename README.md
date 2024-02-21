@@ -7,7 +7,7 @@ This is a Landing Page template. You can clone it and modify it for your project
 1. Clone the repository into a new folder for your new project.
 
 ```
-git clone https://github.com/iqbalzayn01/dailycakes.git my-project
+git clone https://github.com/iqbalzayn01/dailycakes-template.git my-project
 ```
 
 2. Remove the .git directory
