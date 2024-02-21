@@ -1,6 +1,26 @@
-# React + Vite
+## DailyCakes Store - Landing Page Template.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This is a Landing Page template. You can clone it and modify it for your project or something similar.
+
+### Quick Start
+
+1. Clone the repository into a new folder for your new project.
+
+```
+git clone https://github.com/iqbalzayn01/dailycakes.git my-project
+```
+
+2. Remove the .git directory
+
+```
+rm -rf .git
+```
+
+### Tech used
+
+- React + Vite js
+- Javascript
+- framer-motion
 
 Currently, two official plugins are available:
 
