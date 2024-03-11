@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 
-export const LoadingScreen = () => {
+export default function LoadingScreen() {
   return (
     <motion.div
       className="fixed inset-0 z-[100] w-full h-screen m-auto p-5 grid place-content-center bg-gray-50 "
@@ -29,4 +29,4 @@ export const LoadingScreen = () => {
       </h1>
     </motion.div>
   );
-};
+}

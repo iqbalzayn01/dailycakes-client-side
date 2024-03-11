@@ -57,41 +57,12 @@ ParallaxText.propTypes = {
   baseVelocity: PropTypes.number,
 };
 
-const ParallaxImage = (target) => {
-  const { scrollYProgress } = useScroll({
-    target: target,
-    offset: ["start end", "end start"],
-  });
-
-  const springConfig = { mass: 0.6, damping: 100, stiffness: 300 };
-  const springY = useSpring(scrollYProgress, springConfig);
-  const imagesY = useTransform(springY, [0, 1], ["0%", "60%"]);
-  const backgroundY = useTransform(springY, [0, 1], ["0%", "-190%"]);
-  return { imagesY, backgroundY };
-};
-
 export const FeaturedProducts = () => {
-  const target = useRef(null);
-  const { backgroundY, imagesY } = ParallaxImage(target);
-
   return (
-    <section
-      ref={target}
-      className="relative w-full h-screen 2xl:container-base"
-    >
-      <motion.div
-        style={{
-          y: backgroundY,
-        }}
-        className="bg-white"
-      >
+    <section className="relative 2xl:container-base">
+      <div className="bg-white">
         <ParallaxText baseVelocity={-3}>Produk Unggulan</ParallaxText>
-        <motion.div
-          style={{
-            y: imagesY,
-          }}
-          className="flex flex-col gap-20 px-5"
-        >
+        <div className="flex flex-col gap-20 px-5">
           <figure className="w-[325px] self-center md:self-start z-20">
             <Link>
               <img
@@ -151,8 +122,8 @@ export const FeaturedProducts = () => {
               Roti Pandan kami menjadi favorit di setiap meja sarapan.
             </figcaption>
           </figure>
-        </motion.div>
-      </motion.div>
+        </div>
+      </div>
     </section>
   );
 };
