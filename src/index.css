@@ -30,6 +30,8 @@
         @apply block mr-8
     }
 
-
+    .text-input {
+        @apply appearance-none rounded-lg w-full md:w-1/2 px-5 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-blue-500 focus:border-blue-500 appearance-none rounded-lg w-full border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-blue-500 focus:border-blue-500
+    }
 
 }

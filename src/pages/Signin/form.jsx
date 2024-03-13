@@ -34,7 +34,7 @@ export default function Sform({
       />
       <SButton
         type="submit"
-        className="bg-blue-500 hover:bg-blue-600 px-5 py-2 text-center text-white rounded-lg"
+        className="bg-black hover:bg-pinkcustom px-5 py-2 text-center text-white rounded-lg"
         loading={isLoading}
         disabled={isLoading}
       >

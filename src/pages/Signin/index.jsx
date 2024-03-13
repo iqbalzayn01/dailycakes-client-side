@@ -1,14 +1,13 @@
 import { useState } from "react";
 import { useNavigate, Navigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import axios from "axios";
 import { setToken } from "../../redux/authSlice";
-import { config } from "../../config";
+import { postData } from "../../utils/fetch";
 
 import Sform from "./form";
 import SAlert from "../../components/Alert";
 
-export default function PageSignIn() {
+export default function SignIn() {
   const token = useSelector((state) => state.auth.token);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -34,7 +33,7 @@ export default function PageSignIn() {
 
     setIsLoading(true);
     try {
-      const res = await axios.post(`${config.api_url}/cms/auth/signin`, form);
+      const res = await postData(`/cms/auth/signin`, form);
 
       dispatch(setToken(res.data.data.token));
       setIsLoading(false);
@@ -52,8 +51,8 @@ export default function PageSignIn() {
 
   return (
     <section className="container-base w-full h-screen flex flex-col place-content-center gap-5 px-10 py-10">
-      <h1 className="font-bold text-2xl text-center uppercase tracking-wider">
-        DailyCakes <i className="text-blue-500">Admin</i>
+      <h1 className="font-fontPrimary font-bold text-2xl text-center uppercase tracking-wider">
+        DailyCakes
       </h1>
       <h3 className="text-center">Sign In</h3>
       {alert.status && (

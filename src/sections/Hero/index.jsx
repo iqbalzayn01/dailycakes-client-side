@@ -1,7 +1,18 @@
-// import { useRef } from "react";
-import { motion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
+import CButton from "../../components/CButton";
 
 export const Hero = () => {
+  const token = localStorage.getItem("token");
+  const navigate = useNavigate();
+
+  const handleCTA = () => {
+    if (!token) {
+      navigate("/signin");
+    } else {
+      navigate("/products");
+    }
+  };
+
   return (
     <section className="container-base w-full md:w-2/3 h-screen grid place-content-center px-5 py-5">
       <div className="flex flex-col place-content-center gap-5">
@@ -13,14 +24,13 @@ export const Hero = () => {
           gigitan kue dan roti segar kami yang disiapkan dengan cinta dan
           dedikasi.
         </p>
-        <motion.button
+        <CButton
+          action={handleCTA}
           className="w-fit self-center bg-black hover:bg-pinkcustom font-fontSecondary text-white px-6 py-4 rounded-full"
-          whileHover={{ scale: 1.06 }}
-          whileTap={{ scale: 0.8 }}
-          transition={{ type: "spring", stiffness: 400, damping: 17 }}
+          type="button"
         >
           Jelajahi Produk Kami
-        </motion.button>
+        </CButton>
       </div>
     </section>
   );

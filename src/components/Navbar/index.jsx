@@ -1,9 +1,15 @@
 import PropTypes from "prop-types";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { clearToken } from "../../redux/authSlice";
 import { motion, AnimatePresence } from "framer-motion";
 import { useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 
 export default function Navbar({ isOpen, closeMenu }) {
+  const token = localStorage.getItem("token");
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const navRef = useRef(null);
 
   useEffect(() => {
@@ -12,6 +18,20 @@ export default function Navbar({ isOpen, closeMenu }) {
       menu.style.display = "block";
     }
   }, [isOpen]);
+
+  //  const handleToSignIn = () => {
+  //    if (!token) {
+  //      navigate("/signin");
+  //    } else {
+  //      navigate("/products");
+  //    }
+  //  };
+
+  const handleSignOut = () => {
+    dispatch(clearToken());
+    window.location.reload();
+    navigate("/");
+  };
 
   return (
     <AnimatePresence>
@@ -40,6 +60,26 @@ export default function Navbar({ isOpen, closeMenu }) {
             }}
             className="container-base w-full md:w-fit h-screen flex flex-col items-start justify-center gap-5"
           >
+            {token && (
+              <>
+                <li>
+                  <Link
+                    to="/user-profile"
+                    className="font-fontPrimary font-semibold text-5xl hover:underline"
+                  >
+                    Profile
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/cart"
+                    className="font-fontPrimary font-semibold text-5xl hover:underline"
+                  >
+                    Keranjang
+                  </Link>
+                </li>
+              </>
+            )}
             <li>
               <Link
                 to="/tentangkami"
@@ -50,7 +90,7 @@ export default function Navbar({ isOpen, closeMenu }) {
             </li>
             <li>
               <Link
-                to="/produk"
+                to="/products"
                 className="font-fontPrimary font-semibold text-5xl hover:underline"
               >
                 Produk
@@ -72,22 +112,36 @@ export default function Navbar({ isOpen, closeMenu }) {
                 Hubungi Kami
               </Link>
             </li>
-            <li>
-              <Link
-                to="/hubungikami"
-                className="font-fontPrimary font-semibold text-5xl hover:underline"
-              >
-                Sign Up
-              </Link>
-            </li>
-            <li>
-              <Link
-                to="/hubungikami"
-                className="font-fontPrimary font-semibold text-5xl hover:underline"
-              >
-                Sign In
-              </Link>
-            </li>
+            {!token && (
+              <>
+                <li>
+                  <Link
+                    to="/hubungikami"
+                    className="font-fontPrimary font-semibold text-5xl hover:underline"
+                  >
+                    Sign Up
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/signin"
+                    className="font-fontPrimary font-semibold text-5xl hover:underline"
+                  >
+                    Sign In
+                  </Link>
+                </li>
+              </>
+            )}
+            {token && (
+              <li>
+                <button
+                  onClick={handleSignOut}
+                  className="font-fontPrimary font-semibold text-5xl hover:underline"
+                >
+                  Sign Out
+                </button>
+              </li>
+            )}
           </motion.ul>
         </motion.nav>
       )}

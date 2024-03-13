@@ -1,4 +1,5 @@
 import PropTypes from "prop-types";
+import { motion } from "framer-motion";
 
 export default function CButton({
   children,
@@ -9,14 +10,17 @@ export default function CButton({
   type,
 }) {
   return (
-    <button
+    <motion.button
       type={type}
       className={className}
       onClick={action}
       disabled={disabled}
+      whileHover={{ scale: 1.06 }}
+      whileTap={{ scale: 0.8 }}
+      transition={{ type: "spring", stiffness: 400, damping: 17 }}
     >
       {loading ? "Loading..." : children}
-    </button>
+    </motion.button>
   );
 }
 
